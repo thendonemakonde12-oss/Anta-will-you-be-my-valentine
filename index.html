@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Valentine ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* First Section - Typing Animation */
+        #intro-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #ff0000; /* Red background */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s ease;
+        }
+
+        #intro-section.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .typing-text {
+            font-size: 2.2rem;
+            color: #ffb6c1; /* Baby pink */
+            text-align: center;
+            line-height: 1.8;
+            padding: 20px;
+            min-height: 300px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 2.2rem;
+            background-color: #ffb6c1;
+            margin-left: 5px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Small black hearts in background */
+        .heart-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            color: black;
+            font-size: 20px;
+            opacity: 0.3;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        /* Main Valentine Section */
+        #valentine-section {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            background-color: #ffb6c1; /* Lilly pink */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .canvas-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 800px;
+            height: 60vh;
+            background-color: #e75480; /* Dark pink canvas */
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .question {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            animation: pulse 2s infinite;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .yes-btn, .no-btn {
+            padding: 15px 40px;
+            font-size: 1.8rem;
+            font-family: 'Dancing Script', cursive;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .yes-btn {
+            background-color: #ff4757;
+            color: white;
+        }
+
+        .no-btn {
+            background-color: #333;
+            color: white;
+        }
+
+        .yes-btn:hover {
+            background-color: #ff3742;
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .no-btn:hover {
+            background-color: #555;
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Special heart emoji */
+        .special-heart {
+            color: #ff0000;
+            font-size: 1.5em;
+            vertical-align: middle;
+            animation: heartbeat 1.2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        /* Celebration text */
+        .celebration-text {
+            font-size: 3.5rem;
+            color: #ffeb3b;
+            text-align: center;
+            margin-top: 20px;
+            animation: celebration 1.5s infinite alternate;
+            text-shadow: 0 0 10px rgba(255, 235, 59, 0.8);
+        }
+
+        @keyframes celebration {
+            0% { transform: scale(1); text-shadow: 0 0 10px rgba(255, 235, 59, 0.8); }
+            100% { transform: scale(1.1); text-shadow: 0 0 20px rgba(255, 235, 59, 1), 0 0 30px rgba(255, 235, 59, 0.8); }
+        }
+
+        /* Celebration emojis */
+        .celebration-emoji {
+            font-size: 2.5rem;
+            margin: 0 10px;
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .typing-text {
+                font-size: 1.5rem;
+            }
+            
+            .question {
+                font-size: 2.5rem;
+            }
+            
+            .canvas-container {
+                width: 90%;
+                height: 50vh;
+                padding: 20px;
+            }
+            
+            .yes-btn, .no-btn {
+                padding: 12px 30px;
+                font-size: 1.5rem;
+            }
+            
+            .celebration-text {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- First Section - Typing Animation -->
+    <div id="intro-section">
+        <div class="heart-bg" id="heart-bg"></div>
+        <div class="typing-text" id="typing-text"></div>
+        <div class="cursor" id="cursor"></div>
+    </div>
+
+    <!-- Main Valentine Section -->
+    <div id="valentine-section">
+        <div class="canvas-container">
+            <h1 class="question">Will you be my Valentine?</h1>
+            <div class="buttons">
+                <button class="yes-btn" id="yes-btn">Yes! ❤️</button>
+                <button class="no-btn" id="no-btn">No</button>
+            </div>
+            <div id="celebration-container"></div>
+        </div>
+    </div>
+
+    <script>
+        // Typing animation text - separated into text and HTML parts for proper rendering
+        const textLines = [
+            {text: "Dinga la mbilu yanga,", hasHeart: false},
+            {text: "Mufunwa wanga,", hasHeart: false},
+            {text: "Tshineke tshanga tshe nda to tshi nanga ", hasHeart: true},
+            {text: "Ndo tondiwa nga uvha nae vhutshiloni hanga,", hasHeart: false}
+        ];
+
+        const typingSpeed = 100; // milliseconds per character
+        const lineDelay = 800; // milliseconds between lines
+        const initialDelay = 500; // initial delay before typing starts
+        const sectionDelay = 3000; // 3 seconds pause before transition
+
+        let currentLine = 0;
+        let currentChar = 0;
+        let typingInterval;
+        let isTyping = true;
+
+        // Create small black hearts in background
+        function createHearts() {
+            const heartBg = document.getElementById('heart-bg');
+            const heartsCount = 50;
+            
+            for (let i = 0; i < heartsCount; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '♥';
+                heart.classList.add('heart');
+                
+                // Random position
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                
+                // Random size
+                const size = Math.random() * 15 + 10;
+                heart.style.fontSize = size + 'px';
+                
+                // Random animation delay and duration
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                
+                heartBg.appendChild(heart);
+            }
+        }
+
+        // Typewriter effect
+        function typeText() {
+            const typingText = document.getElementById('typing-text');
+            
+            if (currentLine < textLines.length) {
+                const lineData = textLines[currentLine];
+                
+                if (currentChar < lineData.text.length) {
+                    // Add next character
+                    typingText.innerHTML += lineData.text.charAt(currentChar);
+                    currentChar++;
+                } else {
+                    // Add heart emoji if this line needs it
+                    if (lineData.hasHeart) {
+                        typingText.innerHTML += '<span class="special-heart">❤️</span>';
+                    }
+                    
+                    // Move to next line
+                    typingText.innerHTML += '<br><br>';
+                    currentLine++;
+                    currentChar = 0;
+                    
+                    // Pause before next line
+                    if (currentLine < textLines.length) {
+                        clearInterval(typingInterval);
+                        setTimeout(() => {
+                            typingInterval = setInterval(typeText, typingSpeed);
+                        }, lineDelay);
+                    } else {
+                        // All text typed, pause then transition
+                        clearInterval(typingInterval);
+                        setTimeout(transitionToMainSection, sectionDelay);
+                    }
+                }
+            }
+        }
+
+        // Transition to main Valentine section
+        function transitionToMainSection() {
+            const introSection = document.getElementById('intro-section');
+            const valentineSection = document.getElementById('valentine-section');
+            
+            // Fade out intro section
+            introSection.classList.add('fade-out');
+            
+            // Show main section after fade out
+            setTimeout(() => {
+                introSection.style.display = 'none';
+                valentineSection.style.display = 'block';
+            }, 1000);
+        }
+
+        // Celebration function when she says Yes
+        function celebrateYes() {
+            const question = document.querySelector('.question');
+            const buttons = document.querySelector('.buttons');
+            const celebrationContainer = document.getElementById('celebration-container');
+            
+            // Update the main text
+            question.innerHTML = "Mifhululu denndeni!!!!!!!!";
+            
+            // Add celebration emojis and red heart
+            question.innerHTML += '<div style="font-size: 3rem; margin-top: 20px;">';
+            question.innerHTML += '<span class="celebration-emoji" style="animation-delay: 0s;">🎉</span>';
+            question.innerHTML += '<span class="celebration-emoji" style="animation-delay: 0.2s;">🥳</span>';
+            question.innerHTML += '<span class="celebration-emoji" style="color: #ff0000; animation-delay: 0.4s;">❤️</span>';
+            question.innerHTML += '<span class="celebration-emoji" style="animation-delay: 0.6s;">🎊</span>';
+            question.innerHTML += '<span class="celebration-emoji" style="animation-delay: 0.8s;">✨</span>';
+            question.innerHTML += '</div>';
+            
+            // Remove the buttons
+            buttons.style.display = 'none';
+            
+            // Add extra celebration text
+            celebrationContainer.innerHTML = `
+                <div class="celebration-text">
+                    You've made me the happiest! 
+                    <span style="color: #ff0000;">❤️</span>
+                </div>
+            `;
+            
+            // Add floating hearts celebration
+            createCelebrationHearts();
+        }
+
+        // Create celebration hearts
+        function createCelebrationHearts() {
+            const container = document.querySelector('.canvas-container');
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.style.position = 'absolute';
+                    heart.style.fontSize = '30px';
+                    heart.style.left = '50%';
+                    heart.style.top = '50%';
+                    heart.style.color = '#ff0000';
+                    heart.style.opacity = '0';
+                    heart.style.transform = 'translate(-50%, -50%)';
+                    heart.style.zIndex = '20';
+                    heart.style.textShadow = '0 0 10px rgba(255, 255, 255, 0.8)';
+                    
+                    container.appendChild(heart);
+                    
+                    // Animate heart floating up
+                    const duration = 1.5 + Math.random();
+                    heart.style.transition = `all ${duration}s ease-out`;
+                    
+                    setTimeout(() => {
+                        heart.style.opacity = '1';
+                        heart.style.top = `${Math.random() * 50}%`;
+                        heart.style.left = `calc(50% + ${(Math.random() - 0.5) * 100}px)`;
+                    }, 10);
+                    
+                    // Remove after animation
+                    setTimeout(() => {
+                        if (heart.parentNode) {
+                            heart.remove();
+                        }
+                    }, duration * 1000);
+                    
+                }, i * 200);
+            }
+        }
+
+        // Button click handlers
+        function setupButtons() {
+            const yesBtn = document.getElementById('yes-btn');
+            const noBtn = document.getElementById('no-btn');
+            
+            yesBtn.addEventListener('click', celebrateYes);
+            
+            noBtn.addEventListener('click', () => {
+                // Make the "No" button move away when hovered
+                noBtn.style.position = 'absolute';
+                noBtn.style.transition = 'all 0.3s ease';
+                
+                const moveButton = () => {
+                    const x = Math.random() * (window.innerWidth - 200);
+                    const y = Math.random() * (window.innerHeight - 100);
+                    noBtn.style.left = x + 'px';
+                    noBtn.style.top = y + 'px';
+                };
+                
+                noBtn.addEventListener('mouseover', moveButton);
+                noBtn.addEventListener('touchstart', moveButton);
+                
+                // Change text to encourage clicking Yes
+                const question = document.querySelector('.question');
+                question.innerHTML = "Are you sure? Please say Yes! 🥺";
+                
+                // Make Yes button bigger
+                yesBtn.style.transform = 'scale(1.2)';
+                yesBtn.style.transition = 'all 0.3s ease';
+            });
+        }
+
+        // Initialize everything when page loads
+        window.onload = function() {
+            createHearts();
+            
+            // Start typing animation after initial delay
+            setTimeout(() => {
+                typingInterval = setInterval(typeText, typingSpeed);
+            }, initialDelay);
+            
+            // Setup button handlers
+            setupButtons();
+        };
+    </script>
+</body>
+</html>
